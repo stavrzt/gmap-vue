@@ -34,12 +34,12 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/diegoazh/gmap-vue.git"
+    "url": "https://github.com/stavrzt/gmap-vue.git"
   },
   "bugs": {
-    "url": "https://github.com/diegoazh/gmap-vue/issues"
+    "url": "https://github.com/stavrzt/gmap-vue/issues"
   },
-  "homepage": "https://github.com/diegoazh/gmap-vue#readme",
+  "homepage": "https://github.com/stavrzt/gmap-vue#readme",
   "dependencies": {
     "@googlemaps/markerclusterer": "^2.0.4",
     "core-js": "^3.22.2",

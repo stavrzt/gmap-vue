@@ -8,7 +8,6 @@
 <script>
 import { MarkerClusterer } from '@googlemaps/markerclusterer';
 import MapElementMixin from '../mixins/map-element';
-import { clusterIconMappedProps } from '../utils/mapped-props-by-map-element';
 import { bindEvents, getPropsValues, bindProps } from '../utils/helpers';
 
 /**
@@ -46,7 +45,7 @@ export default {
           // TODO: analyze the below line because I think it can be removed
           ...this.options,
           map,
-          ...getPropsValues(this, clusterIconMappedProps),
+          ...getPropsValues(this, {}),
         };
         const { options: extraOptions, ...finalOptions } = initialOptions;
 
@@ -56,20 +55,11 @@ export default {
           );
         }
 
-        const {
-          map: mapInstance,
-          markers,
-          algorithm,
-          onClusterClick,
-          renderer,
-        } = finalOptions;
+        const { map: mapInstance, markers } = finalOptions;
 
         this.$clusterObject = new MarkerClusterer({
           map: mapInstance,
           markers,
-          algorithm,
-          onClusterClick,
-          renderer,
         });
 
         bindProps(this, this.$clusterObject, {});
@@ -92,41 +82,11 @@ export default {
     return { $clusterPromise: promise };
   },
   props: {
-    /**
-     * An algorithm to cluster markers. Default is SuperClusterAlgorithm. Must provide a
-     * calculate method accepting AlgorithmInput and returning an array of Cluster.
-     * @values undefined
-     * @see [algorithm](https://googlemaps.github.io/js-markerclusterer/interfaces/MarkerClustererOptions.html#algorithm)
-     */
     algorithm: {
       type: Object,
-      default: undefined,
-    },
-    /**
-     * Function to run when the user clicks the cluster.
-     * @values undefined
-     * @see [onClusterClick](https://googlemaps.github.io/js-markerclusterer/interfaces/MarkerClustererOptions.html#onClusterClick)
-     */
-    onClusterClick: {
-      type: Function,
-      default: undefined,
-    },
-    /**
-     * An object that converts a Cluster into a `google.maps.Marker`. Default is DefaultRenderer.
-     * @values undefined
-     * @see [renderer](https://googlemaps.github.io/js-markerclusterer/interfaces/MarkerClustererOptions.html#renderer)
-     */
-    renderer: {
-      type: Object,
-      default: undefined,
-    },
-    /**
-     * Other options that you can pass to the MarkerClusterer
-     * @values undefined
-     */
-    options: {
-      type: Object,
-      default: undefined,
+      default() {
+        return null;
+      },
     },
   },
   beforeDestroy() {
@@ -149,12 +109,12 @@ export default {
   },
   updated() {
     if (this.$clusterObject) {
-      this.$clusterObject.render();
+      this.$clusterObject.repaint();
     }
   },
   methods: {
     reinsertMarkers() {
-      const oldMarkers = [...this.$clusterObject.markers];
+      const oldMarkers = this.$clusterObject.getMarkers();
       this.$clusterObject.clearMarkers();
       this.$clusterObject.addMarkers(oldMarkers);
     },

@@ -1,84 +1,107 @@
 # GmapVue
 
-[![npm version](https://badge.fury.io/js/gmap-vue.svg)](https://badge.fury.io/js/gmap-vue)
 [![Build Status](https://travis-ci.org/diegoazh/gmap-vue.svg?branch=master)](https://travis-ci.org/diegoazh/gmap-vue)
-[![Publish](https://github.com/diegoazh/gmap-vue/workflows/publish/badge.svg)](https://github.com/diegoazh/gmap-vue/actions?query=workflow%3Apublish)
-[![Documentation](https://github.com/diegoazh/gmap-vue/workflows/documentation/badge.svg)](https://github.com/diegoazh/gmap-vue/actions?query=workflow%3Adocumentation)
 [![](https://data.jsdelivr.com/v1/package/npm/gmap-vue/badge)](https://www.jsdelivr.com/package/npm/gmap-vue)
 
-## Plugin dependencies
+## Documentation
 
-|Name|Version|
-|----|-------|
-|*vue*|[![npm version](https://d25lcipzij17d.cloudfront.net/badge.svg?id=js&r=r&type=6e&v=2.6.14&x2=0)](https://d25lcipzij17d.cloudfront.net/badge.svg?id=js&r=r&type=6e&v=2.6.14&x2=0)|
-|*@googlemaps/markerclusterer*|[![npm version](https://badge.fury.io/js/@googlemaps%2Fmarkerclusterer.svg)](https://badge.fury.io/js/@googlemaps%2Fmarkerclusterer)|
+The new documentation page is ready and it contains all examples for any component in the plugin.
 
-## Project dependencies
+You can use your own gmap key in order to test it in the live example section.
 
-|Name|Version|
-|----|-------|
-|*pnpm*|[![npm version](https://badge.fury.io/js/pnpm.svg)](https://badge.fury.io/js/pnpm)|
-|*commitlint*|[![npm version](https://badge.fury.io/js/commitlint.svg)](https://badge.fury.io/js/commitlint)|
-|*husky*|[![npm version](https://badge.fury.io/js/husky.svg)](https://badge.fury.io/js/husky)|
-|*lint-staged*|[![npm version](https://badge.fury.io/js/lint-staged.svg)](https://badge.fury.io/js/lint-staged)|
+We have planed improve and grow all required documentation about the plugin.
 
-## [Documentation](https://diegoazh.github.io/gmap-vue/)
+Please follow next link to our [documentation](https://diegoazh.github.io/gmap-vue/).
 
-The new documentation site is ready and it contains all examples for all components in the plugin.
+## Vue-2 port of vue-google-maps
 
-If you find some parts of the plugin that was not documented, or if you think that some parts of the documentation are dark or can be improved please open an issue following our issue template rules.
+This is a fork of the popular vue2-google-maps. As the author of the library no longer commit to maintain the project, we forked it to develop and maintain the project.
 
-You can use your google maps API key to use the live examples section.
+## CONTRIBUTORS NEEDED!
 
-We have planned to improve and grow all required documentation about the plugin.
-
-Please follow the next link to our [documentation](https://diegoazh.github.io/gmap-vue/).
-
-## Fork of vue2-google-maps
-
-This is a fork of the popular vue2-google-maps. As the author of the library no longer commits to maintain the project, we forked it to develop and maintain the project.
-
-## CONTRIBUTORS ARE WELCOME
-
-If you have time to contribute to a rather frequently used library, feel free to make a PR!, but first please read our [contributing guide](https://github.com/diegoazh/gmap-vue/blob/master/CONTRIBUTING.md).
+If you have time to contribute to a rather frequently used library, feel free to make a PR!
+For more background, please refer to [this issue](https://github.com/xkjyeah/vue-google-maps/issues/514).
 
 What's urgently needed are:
 
-1. Better automated tests (unit with Jest, e2e with Cypress).
+1. Better automated tests
 2. Better integration tests with the popular frameworks, especially Nuxt and Vue template
-3. Migrate to VueJs v3.0
-4. ~~Better documentation (examples, recommendations)~~
+3. ~Better documentation (examples, recommendations)~
 
-Please feel free to fork the project and make a PR to improve the plugin.
+The above three will go a long way to keeping the project maintainable and contributable, and will address many of the open issues.
 
-## Monorepo
+## Braking changes
 
-This project uses [pnpm](https://pnpm.io/es/) to manage the plugin and documentation site.
+### v3.0.0
 
-- Clone the repository
+- `autobindAllEvents` config option was renamed to `autoBindAllEvents`
+- `vueGoogleMapsInit` name was renamed to `GoogleMapsCallback`
+- `gmapApi` function was renamed to `getGoogleMapsAPI`
+- `MapElementMixin` now is exported from `components` object instead of `helpers` object
+- `customCallback` config option was added to reuse existing Google Maps API that already loaded, eg from an HTML file
 
-- Run
+### v2.0.0
 
-```sh
-npm install
+- All components were rewriting in SFC (`.vue`)
+- `MarkerCluster` was renamed to `Cluster`
+- `@google/markerclustererplus` was replace for `@googlemaps/markerclusterer`
+- The plugin exports two main objects:
+  - `components`: it has all components and mountable mixin)
+  - `helpers`: it has promise lazy factory function, gmapApi function and map element mixin
+- The plugin now exports by default the install function, this means that you can do the following
+- From **v2.0.0** and above, the `autocomplete` component uses the `default` slot instead of the named `input` slot, from v1.5.0 the `input` slot on the autocomplete component still works.
+
+  ```js
+  import GmapVue from 'gmap-vue';
+  ```
+
+  instead of
+
+  ```js
+  import * as GmapVue from 'gmap-vue';
+  ```
+
+## Installation
+
+### npm
+
+```shell
+npm install gmap-vue --save
 ```
 
-or if you have installed `pnpm`
+### yarn
 
-```sh
-pnpm install
+```shell
+yarn add gmap-vue
 ```
 
-- After that you can test the component or documentation locally
+### Manually
 
-- To start the documentation site locally you can run the below command, it starts the documentation page on [http://localhost:8080/](http://localhost:8080/)
+Just download `dist/gmap-vue.js` file and include it from your HTML.
 
-```sh
-pnpm run serve:docs
+```html
+<script src="./gmap-vue.js"></script>
 ```
 
-- To test the plugin you also can use a CDN like [jsdelivr](https://diegoazh.github.io/gmap-vue/#jsdelivr) or [unpkg](https://diegoazh.github.io/gmap-vue/#unpkg), in the way that the documentation shows you
+### jsdelivr
 
-## README of GmapVue
+You can use a free CDN like [jsdelivr](https://www.jsdelivr.com) to include this plugin in your html file
 
-You can read the plugin's README file following [this link](https://github.com/diegoazh/gmap-vue/blob/master/packages/gmap-vue/README.md).
+```html
+<script src="https://cdn.jsdelivr.net/npm/gmap-vue@1.2.2/dist/gmap-vue.min.js"></script>
+```
+
+### unpkg
+
+You can use a free CDN like [unpkg](https://unpkg.com) to include this plugin in your html file
+
+```html
+<script src="https://unpkg.com/gmap-vue@1.2.2/dist/gmap-vue.js"></script>
+```
+
+::: warning
+Be aware that if you use this method, you cannot use TitleCase for your components and your attributes.
+That is, instead of writing `<GmapMap>`, you need to write `<gmap-map>`.
+:::
+
+[Live example](https://diegoazh.github.io/gmap-vue/guide/).
